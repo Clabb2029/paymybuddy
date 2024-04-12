@@ -1,6 +1,6 @@
 package com.pay_my_buddy.paymybuddy.service;
 
-import com.pay_my_buddy.paymybuddy.model.Transfer;
+import com.pay_my_buddy.paymybuddy.DTO.Transfer;
 import com.pay_my_buddy.paymybuddy.repository.TransferRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

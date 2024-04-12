@@ -1,6 +1,8 @@
-package com.pay_my_buddy.paymybuddy.model;
+package com.pay_my_buddy.paymybuddy.DTO;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.Min;
+import jakarta.validation.constraints.NotNull;
 import lombok.Data;
 
 import java.util.Date;
@@ -13,6 +15,10 @@ public abstract class Transaction {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer id;
     private Date date;
+
+    @NotNull(message = "You need to specify the amount")
+    @Min(value = 1, message = "The amount should be greater than 0")
     private Float amount;
     private String description;
+
 }
