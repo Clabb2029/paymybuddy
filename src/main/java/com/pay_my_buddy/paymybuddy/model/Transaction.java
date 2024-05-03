@@ -1,4 +1,4 @@
-package com.pay_my_buddy.paymybuddy.DTO;
+package com.pay_my_buddy.paymybuddy.model;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Min;

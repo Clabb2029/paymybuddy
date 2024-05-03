@@ -1,10 +1,9 @@
 package com.pay_my_buddy.paymybuddy.service;
 
-import com.pay_my_buddy.paymybuddy.DTO.User;
+import com.pay_my_buddy.paymybuddy.model.User;
 import com.pay_my_buddy.paymybuddy.exception.EmailAlreadyExistingException;
 import com.pay_my_buddy.paymybuddy.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.dao.DuplicateKeyException;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -23,12 +22,8 @@ public class UserService {
     @Autowired
     private PasswordEncoder passwordEncoder;
 
-    public Iterable<User> getUsers() {
-        return userRepository.findAll();
-    }
-
-    public Optional<User> getUserById(Integer id) {
-        return userRepository.findById(id);
+    public Optional<User> getUserByEmailOtherThanCurrentUser(String currentUserEmail, String emailSearched) {
+        return userRepository.findUserByEmailOtherThanCurrentUser(currentUserEmail, emailSearched);
     }
 
     @Transactional
@@ -48,10 +43,6 @@ public class UserService {
         userRepository.save(user);
     }
 
-    public Iterable<User> getAllUsersExceptCurrentUser(Integer id) {
-        return userRepository.findAllExceptCurrentUser(id);
-    }
-
     public User getAuthenticatedUser() {
         String email = SecurityContextHolder.getContext().getAuthentication().getName();
         if(email.isEmpty()) {
@@ -59,9 +50,4 @@ public class UserService {
         }
         return userRepository.findByEmail(email).get();
     }
-
-    public User getUserByLoginInfo(String email, String password) {
-        return userRepository.findByEmailAndPassword(email, password);
-    }
-
 }

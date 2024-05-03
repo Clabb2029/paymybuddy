@@ -28,3 +28,60 @@
     color: green;
     font-size: 10px;
 }
+
+.nowrap {
+    white-space: nowrap;
+}
+
+.green-text {
+    color: #59B852FF;
+}
+
+.grey-bg {
+    background-color: #f8f9fa;
+}
+
+.nav-link.active {
+    color: #0b5ed7 !important;
+}
+
+.pointer {
+    cursor: pointer;
+}
+
+.nav-tabs > li > .nav-link.active {
+    color: #59B852FF;
+    background-color: #F5F5F5;
+    border-bottom-color: #F5F5F5;
+}
+
+.transfer-row > td, .transfer-row > th {
+    padding: 20px !important;
+    text-align: center;
+}
+
+.btn-success {
+    background-color: #59B852FF !important;
+    border-color: #59B852FF !important;
+}
+
+.transfer-row > th {
+    background-color: #59B852FF !important;
+    color: white !important;
+    font-weight: normal;
+}
+
+.transfer-table {
+    width: 100%;
+    border: 1px solid black !important;
+}
+
+.description > div {
+    width: auto;
+    min-width: 0;
+    max-width: 30vw;
+    display: inline-block;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}

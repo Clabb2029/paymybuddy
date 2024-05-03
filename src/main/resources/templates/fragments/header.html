@@ -1,0 +1,31 @@
+<header th:with="activePage=${activePage}">
+    <nav class="navbar navbar-expand-lg px-2 py-0" th:fragment="header">
+        <div class="container-fluid">
+            <a href="/home" class="navbar-brand">
+                <div class="logo px-3 py-2">Pay My Buddy</div>
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarScroll" aria-controls="navbarScroll" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarScroll">
+                <ul class="navbar-nav navbar-nav-scroll ms-auto" style="--bs-scroll-height: 100px;">
+                    <li class="nav-item">
+                        <a href="/home" class="nav-link" th:classappend="${activePage == 'home' ? 'active' : ''}">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="/transfer" class="nav-link" th:classappend="${activePage == 'transfer' ? 'active' : ''}">Transfer</a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="/profile" class="nav-link" th:classappend="${activePage == 'profile' ? 'active' : ''}">Profile</a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="/contact" class="nav-link" th:classappend="${activePage == 'contact' ? 'active' : ''}">Contact</a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="/logout" class="nav-link" th:classappend="${activePage == 'logout' ? 'active' : ''}">Log off</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+</header>

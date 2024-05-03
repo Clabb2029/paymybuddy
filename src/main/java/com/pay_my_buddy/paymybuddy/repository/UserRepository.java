@@ -1,6 +1,6 @@
 package com.pay_my_buddy.paymybuddy.repository;
 
-import com.pay_my_buddy.paymybuddy.DTO.User;
+import com.pay_my_buddy.paymybuddy.model.User;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
@@ -8,13 +8,14 @@ import org.springframework.stereotype.Repository;
 import java.util.Optional;
 
 @Repository
-public interface UserRepository extends CrudRepository<User, Integer> {
-
-    @Query("FROM User WHERE id != ?1")
-    Iterable<User> findAllExceptCurrentUser(Integer id);
+public interface UserRepository extends CrudRepository<User, Integer>{
 
     Optional<User> findByEmail(String email);
 
     @Query("FROM User WHERE email = ?1 AND password = ?2")
     User findByEmailAndPassword(String email, String password);
+
+    @Query("FROM User WHERE email = ?2 AND email != ?1")
+    Optional<User> findUserByEmailOtherThanCurrentUser(String currentUserEmail, String emailSearched);
+
 }

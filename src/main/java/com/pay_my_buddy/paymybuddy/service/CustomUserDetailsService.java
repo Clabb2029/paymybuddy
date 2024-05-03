@@ -1,6 +1,6 @@
 package com.pay_my_buddy.paymybuddy.service;
 
-import com.pay_my_buddy.paymybuddy.DTO.User;
+import com.pay_my_buddy.paymybuddy.model.User;
 import com.pay_my_buddy.paymybuddy.repository.UserRepository;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;

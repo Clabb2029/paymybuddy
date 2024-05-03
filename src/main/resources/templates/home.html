@@ -1,11 +1,47 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
-<head>
-    <meta charset="UTF-8">
-    <title>TITLE</title>
-    <link rel="stylesheet" href="/styles.css">
-</head>
+<head th:replace="fragments/head.html"></head>
 <body>
-<h1>COUCOU LA TEAM</h1>
+    <header th:replace="fragments/header.html"></header>
+    <div class="container p-4">
+        <h1>Welcome back, <span class="green-text" th:text="${#strings.capitalize(user.getFirstname())}"></span></h1>
+        <div class="mt-5 d-flex justify-content-evenly">
+            <div class="card col-4">
+                <div class="card-body">
+                    <h5 class="card-title">Add new relation</h5>
+                    <form th:action="@{relation/search-buddy}" method="post" th:object="${searchedUser}" class="d-flex">
+                        <div class="input-group">
+                            <span class="input-group-text"><i class="fas fa-at fa-sm"></i></span>
+                            <input th:field="*{email}" type="email" class="form-control" placeholder="Search email" required aria-label="Email">
+                        </div>
+                        <button type="submit" class="btn btn-primary ms-2 nowrap">Search Buddy</button>
+                    </form>
+                    <div th:if="${searchResult}">
+                        <div th:if="${foundUser}" class="d-flex flex-row justify-content-between mt-3">
+                            <p class="card-text m-0" th:text="${foundUser.getEmail()}"></p>
+                            <span th:if="${isBuddy}" class="badge text-bg-success">Already buddy</span>
+                            <span th:if="${!isBuddy}" class="badge text-bg-primary pointer">Add Buddy</span>
+                            <!--<span th:if="${isBuddyAdded}" class="badge text-bg-success">Buddy added</span>-->
+                        </div>
+                        <div th:unless="${foundUser}">
+                            <p class="card-text m-0">No user found with this email. Please try again.</p>
+                        </div>
+                    </div>
+                    <p th:if="${relation}" class="card-text mt-3">Last relation added: <span th:text="${#strings.capitalize(relation.getFirstname())} + ' ' + ${#strings.toUpperCase(relation.getLastname())}"></span></p>
+                </div>
+            </div>
+            <div class="card col-4">
+                <div class="card-body">
+                    <h5 class="card-title">Current Balance</h5>
+                    <h3 class="card-text" th:text="${user.getBalance()} + ' €'"></h3>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
 </body>
 </html>

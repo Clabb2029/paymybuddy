@@ -1,0 +1,8 @@
+<nav aria-label="breadcrumb" th:with="activePage=${activePage}" th:fragment="breadcrumbs" class="grey-bg ps-3 py-2 mb-3">
+    <ol class="breadcrumb m-0">
+        <li class="breadcrumb-item" th:classappend="${activePage == 'home' ? 'active' : ''}"><a class="text-decoration-none" href="/home">Home</a></li>
+        <li class="breadcrumb-item" th:classappend="${activePage == 'transfer' ? 'active' : ''}" th:if="${activePage == 'transfer'}">Transfer</li>
+        <li class="breadcrumb-item" th:classappend="${activePage == 'profile' ? 'active' : ''}" th:if="${activePage == 'profile'}">Profile</li>
+        <li class="breadcrumb-item" th:classappend="${activePage == 'contact' ? 'active' : ''}" th:if="${activePage == 'contact'}">Contact</li>
+    </ol>
+</nav>

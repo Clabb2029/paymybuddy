@@ -1,5 +1,6 @@
-package com.pay_my_buddy.paymybuddy.DTO;
+package com.pay_my_buddy.paymybuddy.model;
 
+import com.pay_my_buddy.paymybuddy.DTO.TransferDTO;
 import jakarta.persistence.*;
 import lombok.Data;
 import lombok.ToString;

@@ -3,14 +3,16 @@ package com.pay_my_buddy.paymybuddy.configuration;
 import com.pay_my_buddy.paymybuddy.repository.UserRepository;
 import com.pay_my_buddy.paymybuddy.service.CustomUserDetailsService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.web.server.ErrorPage;
+import org.springframework.boot.web.server.WebServerFactoryCustomizer;
+import org.springframework.boot.web.servlet.server.ConfigurableServletWebServerFactory;
 import org.springframework.context.ApplicationListener;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.http.HttpStatus;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.authentication.event.AuthenticationFailureBadCredentialsEvent;
 import org.springframework.security.authentication.event.AuthenticationSuccessEvent;
-import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -40,7 +42,7 @@ public class SpringSecurityConfig {
                                 .loginPage("/login")
                                 .usernameParameter("email")
                                 .passwordParameter("password")
-                                .defaultSuccessUrl("/home")
+                                .defaultSuccessUrl("/home",true)
                 ).logout(
                         logout -> logout
                                 .logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
@@ -77,6 +79,11 @@ public class SpringSecurityConfig {
     @Bean
     ApplicationListener<AuthenticationSuccessEvent> successEvent() {
         return event -> System.out.println("Success login " + event.getAuthentication().getClass().getSimpleName() + " - " + event.getAuthentication().getName());
+    }
+
+    @Bean
+    public WebServerFactoryCustomizer<ConfigurableServletWebServerFactory> containerCustomizer() {
+        return container -> container.addErrorPages(new ErrorPage(HttpStatus.NOT_FOUND,"/home"));
     }
 
 }

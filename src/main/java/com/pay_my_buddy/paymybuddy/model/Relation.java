@@ -1,4 +1,4 @@
-package com.pay_my_buddy.paymybuddy.DTO;
+package com.pay_my_buddy.paymybuddy.model;
 
 import jakarta.persistence.*;
 import lombok.Data;
@@ -10,6 +10,7 @@ public class Relation {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column
     private Integer id;
 
     @ManyToOne
