@@ -12,7 +12,7 @@ import java.util.Date;
 public abstract class Transaction {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
     private Date date;
 

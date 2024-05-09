@@ -14,4 +14,5 @@ public interface BankTransferRepository extends CrudRepository<BankTransfer, Int
             "WHERE bt.user.id = ?1 " +
             "ORDER BY bt.date DESC")
     Iterable<BankTransfer> findBankTransfersOfUser(Integer id);
+
 }

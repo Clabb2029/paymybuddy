@@ -7,10 +7,9 @@ import lombok.ToString;
 import org.hibernate.annotations.DynamicUpdate;
 
 @Entity
-@Table(name ="Transfer")
+@Table(name = "Transfer")
 @Data
 @ToString(callSuper = true)
-@DynamicUpdate
 public class Transfer extends Transaction{
 
     private Float commission;

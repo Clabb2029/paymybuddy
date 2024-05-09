@@ -33,13 +33,9 @@ public class UserService {
             throw new EmailAlreadyExistingException("An account with this email address already exists. Please use another one");
         }
         String hashedPassword = passwordEncoder.encode(user.getPassword());
-        System.out.println("user : " + user);
-        System.out.println("hashed PW : " + hashedPassword);
         user.setPassword(hashedPassword);
-        System.out.println("user with HW : " + user);
         user.setIsActive(true);
         user.setBalance((float) 0);
-        System.out.println("user with all : " + user);
         userRepository.save(user);
     }
 
