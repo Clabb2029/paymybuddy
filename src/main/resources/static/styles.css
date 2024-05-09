@@ -85,3 +85,7 @@
     text-overflow: ellipsis;
     white-space: nowrap;
 }
+
+.fa-paper-plane {
+    font-size: 2em;
+}

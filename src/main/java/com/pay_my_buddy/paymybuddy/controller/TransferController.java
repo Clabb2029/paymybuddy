@@ -3,8 +3,6 @@ package com.pay_my_buddy.paymybuddy.controller;
 import com.pay_my_buddy.paymybuddy.DTO.BankTransferDTO;
 import com.pay_my_buddy.paymybuddy.DTO.TransferDTO;
 import com.pay_my_buddy.paymybuddy.model.BankTransfer;
-import com.pay_my_buddy.paymybuddy.model.Transfer;
-import com.pay_my_buddy.paymybuddy.model.User;
 import com.pay_my_buddy.paymybuddy.service.BankTransferService;
 import com.pay_my_buddy.paymybuddy.service.TransferService;
 import com.pay_my_buddy.paymybuddy.service.UserService;
@@ -18,7 +16,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.util.ArrayList;
-import java.util.List;
 
 @Controller
 public class TransferController {
