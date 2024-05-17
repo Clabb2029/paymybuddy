@@ -14,7 +14,9 @@ public interface RelationRepository extends CrudRepository<Relation, Integer> {
     @Query(value = "SELECT u FROM Relation AS r JOIN User AS u ON r.beneficiary.id = u.id WHERE r.sender.id = ?1 ORDER BY r.id DESC LIMIT 1")
     Optional<User> findLastAddedRelationOfUser(Integer id);
 
-
     @Query("FROM Relation WHERE sender.id = ?1 AND beneficiary.id = ?2")
     Optional <Relation> findRelationByUserIds(Integer sender_id, Integer beneficiary_id);
+
+    @Query("FROM Relation AS r JOIN User as u ON r.beneficiary.id = u.id WHERE r.sender.id = ?1")
+    Iterable<Relation> findRelationsOfUser(Integer id);
 }

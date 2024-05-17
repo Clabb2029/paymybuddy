@@ -51,6 +51,7 @@ public class UserController {
         lastRelation.ifPresent(user -> model.addAttribute("relation", user));
         model.addAttribute("user", loggedUser);
         model.addAttribute("searchedUser", new User());
+        model.addAttribute("userToAdd", new User());
         model.addAttribute("activePage", "home");
         model.addAttribute("titlePage", "Home");
         return "home";

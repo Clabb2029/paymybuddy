@@ -5,7 +5,7 @@ import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotNull;
 import lombok.Data;
 
-import java.util.Date;
+import java.time.LocalDateTime;
 
 @MappedSuperclass
 @Data
@@ -14,7 +14,7 @@ public abstract class Transaction {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
-    private Date date;
+    private LocalDateTime date;
 
     @NotNull(message = "You need to specify the amount")
     @Min(value = 1, message = "The amount should be greater than 0")

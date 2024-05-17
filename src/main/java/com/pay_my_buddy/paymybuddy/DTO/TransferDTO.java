@@ -4,14 +4,14 @@ import lombok.Data;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
-import java.util.Date;
+import java.time.LocalDateTime;
 
 @Data
 @NoArgsConstructor
 public class TransferDTO {
 
     private Float commission;
-    private Date date;
+    private LocalDateTime date;
     private String description;
     private String beneficiary_lastname;
     private String beneficiary_firstname;
@@ -24,7 +24,7 @@ public class TransferDTO {
     @Getter
     private String senderFullname;
 
-    public TransferDTO(Float commission, Date date, String description, String beneficiary_lastname, String beneficiary_firstname, String sender_lastname, String sender_firstname, Float amount) {
+    public TransferDTO(Float commission, LocalDateTime date, String description, String beneficiary_lastname, String beneficiary_firstname, String sender_lastname, String sender_firstname, Float amount) {
         this.commission = commission;
         this.date = date;
         this.description = description;

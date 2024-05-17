@@ -7,10 +7,9 @@ import com.pay_my_buddy.paymybuddy.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.util.Optional;
@@ -41,8 +40,13 @@ public class RelationController {
         return "home";
     }
 
-  /*  @RequestMapping(value="/relation/add-buddy")
-    public void addBuddy(Model model) {
-        String foundUser = (String) model.asMap().get("foundUser");
-    }*/
+    @PostMapping("relation/add-buddy")
+    public String addBuddy(@RequestParam("foundUserId") Integer foundUserId, RedirectAttributes redirectAttributes) {
+        User user = userService.getUserById(foundUserId).get();
+        User currentUser = userService.getAuthenticatedUser();
+        relationService.addBuddy(user, currentUser);
+        redirectAttributes.addFlashAttribute("newBuddy", user);
+        redirectAttributes.addFlashAttribute("buddyAdded", true);
+        return "redirect:/home";
+    }
 }

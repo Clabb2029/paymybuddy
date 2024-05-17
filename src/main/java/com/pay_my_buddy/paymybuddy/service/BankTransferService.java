@@ -9,6 +9,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Date;
 
@@ -44,7 +46,7 @@ public class BankTransferService {
         User currentUser = userService.getAuthenticatedUser();
         currentUser.setBalance(currentUser.getBalance() + bankTransfer.getAmount());
         bankTransfer.setUser(currentUser);
-        bankTransfer.setDate(new Date());
+        bankTransfer.setDate(LocalDateTime.now());
         bankTransferRepository.save(bankTransfer);
         userRepository.save(currentUser);
     }

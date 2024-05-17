@@ -5,7 +5,7 @@
     <div class="authentication-container">
         <div class="login-container p-4 ">
             <div class="logo mb-4 mx-auto px-3 py-2">Pay My Buddy</div>
-            <form th:action="@{/login}" th:object="${user}" action="#"  class="form" method="post">
+            <form th:action="@{/login}" th:object="${user}" action="#" class="form" method="post">
                 <div class="input-group mb-3">
                     <span class="input-group-text" id="basic-addon1"><i class="far fa-envelope fa-sm"></i></span>
                     <input th:field="*{email}" type="email" class="form-control" placeholder="Email" aria-label="Email" autofocus>

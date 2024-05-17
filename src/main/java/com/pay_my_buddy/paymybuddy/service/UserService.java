@@ -22,6 +22,11 @@ public class UserService {
     @Autowired
     private PasswordEncoder passwordEncoder;
 
+    public Optional<User> getUserById(Integer id) {
+        return userRepository.findById(id);
+    }
+
+
     public Optional<User> getUserByEmailOtherThanCurrentUser(String currentUserEmail, String emailSearched) {
         return userRepository.findUserByEmailOtherThanCurrentUser(currentUserEmail, emailSearched);
     }
@@ -45,5 +50,9 @@ public class UserService {
             throw new UsernameNotFoundException("Email not found");
         }
         return userRepository.findByEmail(email).get();
+    }
+
+    public void saveUser(User user) {
+        userRepository.save(user);
     }
 }

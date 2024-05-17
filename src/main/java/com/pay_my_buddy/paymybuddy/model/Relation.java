@@ -20,4 +20,11 @@ public class Relation {
     @ManyToOne
     @JoinColumn(name = "sender_id", referencedColumnName = "id")
     private User sender;
+
+    public Relation(User beneficiary, User sender) {
+        this.beneficiary = beneficiary;
+        this.sender = sender;
+    }
+
+    public Relation() {}
 }

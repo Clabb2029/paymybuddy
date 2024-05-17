@@ -1,15 +1,17 @@
 package com.pay_my_buddy.paymybuddy.model;
 
-import com.pay_my_buddy.paymybuddy.DTO.TransferDTO;
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 import lombok.ToString;
-import org.hibernate.annotations.DynamicUpdate;
 
 @Entity
 @Table(name = "Transfer")
 @Data
 @ToString(callSuper = true)
+@AllArgsConstructor
+@NoArgsConstructor
 public class Transfer extends Transaction{
 
     private Float commission;

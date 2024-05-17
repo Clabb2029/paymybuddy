@@ -17,13 +17,15 @@
             <h4>Send Money</h4>
             <a href="/home"><button class="btn btn-primary nowrap">Add Connection</button></a>
         </div>
-        <div class="d-flex justify-content-evenly p-5 grey-bg">
-            <select name="">
+        <form th:action="@{/transfer/send-money}" th:object="${transfer}" action="#" method="post" class="d-flex justify-content-evenly p-5 grey-bg">
+            <select th:field="*{beneficiaryId}">
                 <option value="">Select A Connection</option>
+                <option th:each="userRelation : ${userRelations}" th:value="${userRelation.getBeneficiary().getId()}" th:text="${userRelation.getBeneficiary().getUserFullname()}"></option>
             </select>
-            <input type="number" placeholder="0">
-            <button type="button" class="btn btn-success green-bg px-5">Pay</button>
-        </div>
+            <input type="number" th:field="*{amount}" placeholder="0">
+            <input type="text" th:field="*{description}" placeholder="Description">
+            <button type="submit" class="btn btn-success green-bg px-5">Pay</button>
+        </form>
         <h4 class="mt-4">My Transactions</h4>
         <table class="table table-striped table-borderless transfer-table">
             <thead>
@@ -76,7 +78,7 @@
             </thead>
             <tbody>
             <tr th:each="transfer : ${bankTransfers}" class="transfer-row">
-                <td th:text="${#dates.format(transfer.getDate(), 'dd/MM/yyyy')}"></td>
+                <td th:text="${#temporals.format(transfer.getDate(), 'dd/MM/yyyy HH:mm')}"></td>
                 <td class="description"><div th:text="${transfer.description}"></div></td>
                 <td th:text="${transfer.amount}"></td>
             </tr>

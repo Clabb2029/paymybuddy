@@ -17,15 +17,19 @@
                         <button type="submit" class="btn btn-primary ms-2 nowrap">Search Buddy</button>
                     </form>
                     <div th:if="${searchResult}">
-                        <div th:if="${foundUser}" class="d-flex flex-row justify-content-between mt-3">
+                        <form th:if="${foundUser}" th:action="@{relation/add-buddy}" action="#" method="post" class="d-flex flex-row justify-content-between mt-3">
                             <p class="card-text m-0" th:text="${foundUser.getEmail()}"></p>
+                            <input type="hidden" name="foundUserId" th:value="${foundUser.getId()}">
                             <span th:if="${isBuddy}" class="badge text-bg-success">Already buddy</span>
-                            <span th:if="${!isBuddy}" class="badge text-bg-primary pointer">Add Buddy</span>
-                            <!--<span th:if="${isBuddyAdded}" class="badge text-bg-success">Buddy added</span>-->
-                        </div>
+                            <button th:if="${!isBuddy}" type="submit" class="btn btn-primary btn-sm">Add Buddy</button>
+                        </form>
                         <div th:unless="${foundUser}">
-                            <p class="card-text m-0">No user found with this email. Please try again.</p>
+                            <p class="card-text mt-3">No user found with this email. Please try again.</p>
                         </div>
+                    </div>
+                    <div th:if="${buddyAdded}" class="d-flex flex-row justify-content-between mt-3">
+                        <p class="card-text m-0" th:text="${newBuddy.getEmail()}"></p>
+                        <span class="badge text-bg-success">Buddy added</span>
                     </div>
                     <p th:if="${relation}" class="card-text mt-3">Last relation added: <span th:text="${#strings.capitalize(relation.getFirstname())} + ' ' + ${#strings.toUpperCase(relation.getLastname())}"></span></p>
                 </div>
