@@ -13,7 +13,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.Optional;
 
 @Service
-@Transactional(readOnly = true)
+@Transactional(readOnly = false)
 public class UserService {
 
     @Autowired
@@ -52,7 +52,10 @@ public class UserService {
         return userRepository.findByEmail(email).get();
     }
 
-    public void saveUser(User user) {
-        userRepository.save(user);
+    public User saveUser(User user) {
+        User loggedUser = getAuthenticatedUser();
+        loggedUser.setFirstname(user.getFirstname());
+        loggedUser.setLastname(user.getLastname());
+        return userRepository.save(loggedUser);
     }
 }

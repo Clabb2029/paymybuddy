@@ -18,6 +18,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import java.util.ArrayList;
 import java.util.Optional;
 
 @Controller
@@ -70,6 +71,16 @@ public class UserController {
         return "home";
     }
 
+    @GetMapping("/profile")
+    public String showEditUserPage(Model model) {
+        User loggedUser = userService.getAuthenticatedUser();
+        model.addAttribute("user", loggedUser);
+        model.addAttribute("userSaved", null);
+        model.addAttribute("activePage", "profile");
+        model.addAttribute("titlePage", "Profile");
+        return "profile";
+    }
+
     @PostMapping("/login")
     public ResponseEntity<String> login(@Valid @ModelAttribute("user") User user) {
         Authentication authentication = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(user.getEmail(), user.getPassword()));
@@ -87,6 +98,18 @@ public class UserController {
             redirectAttributes.addFlashAttribute("error", e.getMessage());
             return "redirect:/register";
         }
+    }
+
+    @PostMapping("/edit-user")
+    public String editUser(@ModelAttribute("user") User user, RedirectAttributes redirectAttributes, Model model) {
+        if(user.getFirstname().isEmpty() || user.getLastname().isEmpty()) {
+            redirectAttributes.addFlashAttribute("error", "Please fill in all fields");
+        } else {
+            User userSaved = userService.saveUser(user);
+            model.addAttribute("userSaved", userSaved);
+            redirectAttributes.addFlashAttribute("toastText", "Your name has been successfully saved");
+        }
+        return "redirect:/profile";
     }
 
 }

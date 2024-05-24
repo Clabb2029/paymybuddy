@@ -89,3 +89,15 @@
 .fa-paper-plane {
     font-size: 2em;
 }
+
+.error {
+    color: red;
+}
+
+.toast {
+    position: fixed;
+    top: auto;
+    right: 50vw;
+    transform: translateX(50%);
+    bottom: 2rem;
+}

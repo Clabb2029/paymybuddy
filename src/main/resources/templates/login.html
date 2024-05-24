@@ -7,16 +7,16 @@
             <div class="logo mb-4 mx-auto px-3 py-2">Pay My Buddy</div>
             <form th:action="@{/login}" th:object="${user}" action="#" class="form" method="post">
                 <div class="input-group mb-3">
-                    <span class="input-group-text" id="basic-addon1"><i class="far fa-envelope fa-sm"></i></span>
+                    <span class="input-group-text"><i class="far fa-envelope fa-sm"></i></span>
                     <input th:field="*{email}" type="email" class="form-control" placeholder="Email" aria-label="Email" autofocus>
                 </div>
                 <div class="input-group mb-4">
-                    <span class="input-group-text" id="basic-addon2"><i class="fas fa-star-of-life fa-xs"></i></span>
+                    <span class="input-group-text"><i class="fas fa-star-of-life fa-xs"></i></span>
                     <input th:field="*{password}" type="password" class="form-control" placeholder="Password" aria-label="Password">
                 </div>
                 <div class="mb-3 text-center">
-                    <input class="form-check-input me-1" type="checkbox" value="" id="firstCheckbox">
-                    <label class="form-check-label" for="firstCheckbox">Remember me</label>
+                    <input class="form-check-input me-1" type="checkbox" value="" id="checkbox">
+                    <label class="form-check-label" for="checkbox">Remember me</label>
                 </div>
                 <div class="my-3 text-center">
                     <p>New user ? <a href="/register">Register here</a></p>
