@@ -9,16 +9,17 @@
             <div class="form-floating mb-3">
                 <input type="text" class="form-control" id="floatingLastname" th:value="${userSaved == null ? user.getLastname() : userSaved.getLastname()}" th:field="*{lastname}">
                 <label for="floatingLastname">Lastname</label>
+                <small class="error" th:if="${#fields.hasErrors('lastname')}" th:errors="*{lastname}"></small>
             </div>
             <div class="form-floating mb-3">
                 <input type="text" class="form-control" id="floatingFirstname" th:value="${userSaved == null ? user.getFirstname() : userSaved.getFirstname()}" th:field="*{firstname}">
                 <label for="floatingFirstname">Firstname</label>
+                <small class="error" th:if="${#fields.hasErrors('firstname')}" th:errors="*{firstname}"></small>
             </div>
             <div class="form-floating mb-3">
-                <input type="email" class="form-control" id="floatingEmail" th:value="${user.getEmail()}" disabled>
+                <input type="email" class="form-control" id="floatingEmail" th:value="${userSaved == null ? user.getEmail() : userSaved.getEmail()}" th:field="*{email}" readonly>
                 <label for="floatingEmail">Email address</label>
             </div>
-            <small class="error" th:if="${error}" th:text="${error}" th:style="${error.length > 0 ? 'display:block' : 'display:none'}"></small>
             <button type="submit" class="btn btn-primary mt-4 px-4 ms-2">Save</button>
         </form>
     </div>

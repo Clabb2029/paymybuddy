@@ -8,28 +8,28 @@
             <form th:action="@{/register/save}" th:object="${user}" action="#" class="form" method="post">
                 <div class="input-group mb-3">
                     <span class="input-group-text"><i class="fas fa-user fa-sm"></i></span>
-                    <input th:field="*{lastname}" type="text" class="form-control" placeholder="Lastname" aria-label="Lastname" autofocus>
+                    <input th:field="*{lastname}" type="text" class="form-control" placeholder="Lastname" id="lastname" autofocus>
                 </div>
-                    <span th:if="${#fields.hasErrors('lastname')}" th:errors="*{lastname}" class="error"></span>
+                <small class="error" th:if="${#fields.hasErrors('lastname')}" th:errors="*{lastname}"></small>
                 <div class="input-group mb-3">
                     <span class="input-group-text"><i class="fas fa-user fa-sm"></i></span>
-                    <input th:field="*{firstname}" type="text" class="form-control" placeholder="Firstname" aria-label="Firstname">
+                    <input th:field="*{firstname}" type="text" class="form-control" placeholder="Firstname" id="firstname">
                 </div>
-                    <span th:if="${#fields.hasErrors('firstname')}" th:errors="*{firstname}" class="error"></span>
+                <small class="error" th:if="${#fields.hasErrors('firstname')}" th:errors="*{firstname}"></small>
                 <div class="input-group mb-3">
                     <span class="input-group-text"><i class="far fa-envelope fa-sm"></i></span>
-                    <input th:field="*{email}" type="email" class="form-control" placeholder="Email" aria-label="Email">
+                    <input th:field="*{email}" type="email" class="form-control" placeholder="Email" id="email">
                 </div>
-                    <span th:if="${#fields.hasErrors('email')}" th:errors="*{email}" class="error"></span>
+                <small class="error" th:if="${#fields.hasErrors('email')}" th:errors="*{email}"></small>
                 <div class="input-group mb-1">
                     <span class="input-group-text"><i class="fas fa-star-of-life fa-xs"></i></span>
-                    <input th:field="*{password}" type="password" class="form-control" placeholder="Password" aria-label="Password">
+                    <input th:field="*{password}" type="password" class="form-control" placeholder="Password" id="password">
                 </div>
-                <span th:if="${#fields.hasErrors('password')}" th:errors="*{password}" class="error"></span>
+                <small class="error" th:if="${#fields.hasErrors('password')}" th:errors="*{password}"></small>
                 <span th:if="${param.success}" class="success">Your account has been successfully created</span>
                 <span th:if="${param.error}" class="error">There was an error when creating your account. Please try again later</span>
                 <div class="my-3 text-center">
-                    <p>Already has an account ? <a href="/login">Sign in here</a></p>
+                    <p>Already have an account ? <a href="/login">Sign in here</a></p>
                 </div>
                 <div class="text-center">
                     <button type="submit" class="btn btn-primary mt-4 px-4" value="Add User">Create account</button>

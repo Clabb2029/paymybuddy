@@ -2,7 +2,8 @@ package com.pay_my_buddy.paymybuddy.model;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
-import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Max;
+import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -21,20 +22,23 @@ public class User {
     private Integer id;
 
     @Column
-    @NotBlank(message = "Please fill the lastname field")
+    @NotNull(message = "Please fill the lastname field")
+    @Max(value = 40, message = "Your lastname must be a maximum of 40 characters")
     private String lastname;
 
     @Column
-    @NotBlank(message = "Please fill the firstname field")
+    @NotNull(message = "Please fill the firstname field")
+    @Max(value = 40, message = "Your firstname must be a maximum of 40 characters")
     private String firstname;
 
     @Column
-    @NotBlank(message = "Please fill the email field")
+    @NotNull(message = "Please fill the email field")
     @Email(message = "Email should be valid")
+    @Max(value = 254, message = "Your email must be a maximum of 254 characters")
     private String email;
 
     @Column
-    @NotBlank(message = "Please fill the password field")
+    @NotNull(message = "Please fill the password field")
     private String password;
 
     @Column

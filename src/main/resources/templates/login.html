@@ -10,10 +10,12 @@
                     <span class="input-group-text"><i class="far fa-envelope fa-sm"></i></span>
                     <input th:field="*{email}" type="email" class="form-control" placeholder="Email" aria-label="Email" autofocus>
                 </div>
+                <small class="error" th:if="${#fields.hasErrors('email')}" th:errors="*{email}"></small>
                 <div class="input-group mb-4">
                     <span class="input-group-text"><i class="fas fa-star-of-life fa-xs"></i></span>
                     <input th:field="*{password}" type="password" class="form-control" placeholder="Password" aria-label="Password">
                 </div>
+                <small class="error" th:if="${#fields.hasErrors('password')}" th:errors="*{password}"></small>
                 <div class="mb-3 text-center">
                     <input class="form-check-input me-1" type="checkbox" value="" id="checkbox">
                     <label class="form-check-label" for="checkbox">Remember me</label>

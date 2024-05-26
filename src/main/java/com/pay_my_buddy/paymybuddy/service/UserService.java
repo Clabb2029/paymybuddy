@@ -2,6 +2,7 @@ package com.pay_my_buddy.paymybuddy.service;
 
 import com.pay_my_buddy.paymybuddy.model.User;
 import com.pay_my_buddy.paymybuddy.exception.EmailAlreadyExistingException;
+import com.pay_my_buddy.paymybuddy.model.viewModel.UserProfileViewForm;
 import com.pay_my_buddy.paymybuddy.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -52,10 +53,11 @@ public class UserService {
         return userRepository.findByEmail(email).get();
     }
 
-    public User saveUser(User user) {
+    public User saveUser(UserProfileViewForm user) {
         User loggedUser = getAuthenticatedUser();
         loggedUser.setFirstname(user.getFirstname());
         loggedUser.setLastname(user.getLastname());
+        System.out.println("logged user " + loggedUser);
         return userRepository.save(loggedUser);
     }
 }

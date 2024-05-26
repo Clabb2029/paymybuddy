@@ -8,6 +8,7 @@ import com.pay_my_buddy.paymybuddy.model.Transfer;
 import com.pay_my_buddy.paymybuddy.model.User;
 import com.pay_my_buddy.paymybuddy.model.viewModel.TransferViewForm;
 import com.pay_my_buddy.paymybuddy.repository.TransferRepository;
+import com.pay_my_buddy.paymybuddy.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -28,6 +29,9 @@ public class TransferService {
 
     @Autowired
     private RelationService relationService;
+
+    @Autowired
+    private UserRepository userRepository;
 
     public ArrayList<TransferDTO> getTransfersOfUser(Integer id) {
         Iterable<Transfer> transferList = transferRepository.findTransfersOfUser(id);
@@ -72,11 +76,11 @@ public class TransferService {
         // Beneficiary balance updating
         User beneficiary = relation.getBeneficiary();
         beneficiary.setBalance(beneficiary.getBalance() + amount);
-        userService.saveUser(beneficiary);
+        userRepository.save(beneficiary);
 
         // Sender balance updating
         User sender = relation.getSender();
         sender.setBalance(sender.getBalance() - transfer.getAmount());
-        userService.saveUser(sender);
+        userRepository.save(sender);
     }
 }

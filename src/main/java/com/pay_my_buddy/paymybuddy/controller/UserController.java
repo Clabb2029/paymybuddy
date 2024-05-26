@@ -2,6 +2,7 @@ package com.pay_my_buddy.paymybuddy.controller;
 
 import com.pay_my_buddy.paymybuddy.model.User;
 import com.pay_my_buddy.paymybuddy.exception.EmailAlreadyExistingException;
+import com.pay_my_buddy.paymybuddy.model.viewModel.UserProfileViewForm;
 import com.pay_my_buddy.paymybuddy.service.RelationService;
 import com.pay_my_buddy.paymybuddy.service.UserService;
 import jakarta.validation.Valid;
@@ -15,10 +16,10 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import java.util.ArrayList;
 import java.util.Optional;
 
 @Controller
@@ -74,7 +75,8 @@ public class UserController {
     @GetMapping("/profile")
     public String showEditUserPage(Model model) {
         User loggedUser = userService.getAuthenticatedUser();
-        model.addAttribute("user", loggedUser);
+        UserProfileViewForm user = new UserProfileViewForm(loggedUser.getLastname(), loggedUser.getFirstname(), loggedUser.getEmail());
+        model.addAttribute("user", user);
         model.addAttribute("userSaved", null);
         model.addAttribute("activePage", "profile");
         model.addAttribute("titlePage", "Profile");
@@ -82,14 +84,23 @@ public class UserController {
     }
 
     @PostMapping("/login")
-    public ResponseEntity<String> login(@Valid @ModelAttribute("user") User user) {
+    public ResponseEntity<String> login(@Valid @ModelAttribute("user") User user, BindingResult bindingResult) {
+        System.out.println("user : " + user);
+        System.out.println("binding res " + bindingResult);
         Authentication authentication = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(user.getEmail(), user.getPassword()));
         SecurityContextHolder.getContext().setAuthentication(authentication);
         return new ResponseEntity<>("User successfully logged in!", HttpStatus.OK);
     }
 
     @PostMapping("/register/save")
-    public String registration(@Valid @ModelAttribute("user") User user, RedirectAttributes redirectAttributes) {
+    public String registration(@Valid @ModelAttribute("user") User user, RedirectAttributes redirectAttributes, BindingResult bindingResult) {
+        System.out.println("user : " + user);
+        System.out.println("binding res " + bindingResult);
+        if(bindingResult.hasErrors()) {
+            redirectAttributes.addFlashAttribute("org.springframework.validation.BindingResult.user", bindingResult);
+            redirectAttributes.addFlashAttribute("user", user);
+            return "register";
+        }
         try {
             userService.createUser(user);
             redirectAttributes.addFlashAttribute("created", "Your account has been successfully created");
@@ -101,14 +112,18 @@ public class UserController {
     }
 
     @PostMapping("/edit-user")
-    public String editUser(@ModelAttribute("user") User user, RedirectAttributes redirectAttributes, Model model) {
-        if(user.getFirstname().isEmpty() || user.getLastname().isEmpty()) {
-            redirectAttributes.addFlashAttribute("error", "Please fill in all fields");
-        } else {
-            User userSaved = userService.saveUser(user);
-            model.addAttribute("userSaved", userSaved);
-            redirectAttributes.addFlashAttribute("toastText", "Your name has been successfully saved");
+    public String editUser(@Valid @ModelAttribute("user") UserProfileViewForm user, BindingResult bindingResult, RedirectAttributes redirectAttributes, Model model) {
+        System.out.println(user);
+        System.out.println(bindingResult.hasErrors());
+        System.out.println(bindingResult.getAllErrors());
+        if(bindingResult.hasErrors()) {
+            redirectAttributes.addFlashAttribute("org.springframework.validation.BindingResult.user", bindingResult);
+            redirectAttributes.addFlashAttribute("user", user);
+            return "profile";
         }
+        User userSaved = userService.saveUser(user);
+        model.addAttribute("userSaved", userSaved);
+        redirectAttributes.addFlashAttribute("toastText", "Your name has been successfully saved");
         return "redirect:/profile";
     }
 
