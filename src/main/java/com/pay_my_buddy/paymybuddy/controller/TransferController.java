@@ -14,12 +14,15 @@ import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.util.ArrayList;
+import java.util.List;
 
 @SuppressWarnings("UnresolvedClassReferenceRepair")
 @Controller
@@ -48,6 +51,7 @@ public class TransferController {
         model.addAttribute("transfers", transferDTOList);
         model.addAttribute("currentUserFullname", userService.getAuthenticatedUser().getUserFullname());
         model.addAttribute("transfer", new TransferViewForm());
+        model.addAttribute("draftTransfer", null);
         model.addAttribute("userRelations", relationList);
         return "transfer";
     }
@@ -58,22 +62,45 @@ public class TransferController {
         model.addAttribute("titlePage", "Transfer");
         model.addAttribute("selectedTab", "banktransfer");
         model.addAttribute("bankTransfer", new BankTransfer());
+        model.addAttribute("draftBankTransfer", null);
         ArrayList<BankTransferDTO> bankTransferDTOList = bankTransferService.getBankTransfersOfUser(userService.getAuthenticatedUser().getId());
         model.addAttribute("bankTransfers", bankTransferDTOList);
         return "transfer";
     }
 
     @PostMapping("/transfer/send-money")
-    public String sendMoney(@ModelAttribute("transfer") TransferViewForm transfer) {
+    public String sendMoney(@Valid @ModelAttribute("transfer") TransferViewForm transfer, BindingResult bindingResult, RedirectAttributes redirectAttributes, Model model) {
+        if(bindingResult.hasErrors()) {
+            List<FieldError> errors = bindingResult.getFieldErrors();
+            if(errors.size() > 1) {
+                redirectAttributes.addFlashAttribute("toastErrorText", "Please select a buddy and fill the amount field");
+            } else {
+                redirectAttributes.addFlashAttribute("toastErrorText", errors.get(0).getDefaultMessage());
+            }
+            redirectAttributes.addFlashAttribute("draftTransfer", transfer);
+            return "redirect:/transfer";
+        }
         Integer currentUserId = userService.getAuthenticatedUser().getId();
         transferService.sendMoney(currentUserId, transfer);
+        redirectAttributes.addFlashAttribute("toastSuccessText", "Your payment has been successfully made");
         return "redirect:/transfer";
     }
 
     @PostMapping("/transfer/add-money")
-    public String addMoney(@Valid @ModelAttribute("bankTransfer") BankTransfer bankTransfer, RedirectAttributes redirectAttributes) {
+    public String addMoney(@Valid @ModelAttribute("bankTransfer") BankTransfer bankTransfer, BindingResult bindingResult, RedirectAttributes redirectAttributes, Model model) {
+        if(bindingResult.hasErrors()) {
+            List<FieldError> errors = bindingResult.getFieldErrors();
+            if(errors.size() > 1) {
+                redirectAttributes.addFlashAttribute("toastErrorText", "Please fill the amount and bank account number fields");
+            } else {
+                redirectAttributes.addFlashAttribute("toastErrorText", errors.get(0).getDefaultMessage());
+            }
+            redirectAttributes.addFlashAttribute("draftBankTransfer", bankTransfer);
+            return "redirect:/bank-transfer";
+        }
         bankTransferService.addMoney(bankTransfer);
-        redirectAttributes.addFlashAttribute("added", "Your payment has been successfully made");
+        redirectAttributes.addFlashAttribute("toastSuccessText", "Your payment has been successfully made");
+        model.addAttribute("selectedTab", "banktransfer");
         return "redirect:/bank-transfer";
     }
 }

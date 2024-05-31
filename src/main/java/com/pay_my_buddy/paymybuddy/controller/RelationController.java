@@ -47,6 +47,7 @@ public class RelationController {
         relationService.addBuddy(user, currentUser);
         redirectAttributes.addFlashAttribute("newBuddy", user);
         redirectAttributes.addFlashAttribute("buddyAdded", true);
+        redirectAttributes.addFlashAttribute("toastText", user.getUserFullname() + " has been successfully added to your buddies list.");
         return "redirect:/home";
     }
 }

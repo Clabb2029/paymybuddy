@@ -39,6 +39,8 @@ public class UserService {
             throw new EmailAlreadyExistingException("An account with this email address already exists. Please use another one");
         }
         String hashedPassword = passwordEncoder.encode(user.getPassword());
+        user.setFirstname(user.getFirstname().substring(0, 1).toUpperCase() + user.getFirstname().substring(1));
+        user.setLastname(user.getLastname().substring(0, 1).toUpperCase() + user.getLastname().substring(1));
         user.setPassword(hashedPassword);
         user.setIsActive(true);
         user.setBalance((float) 0);
@@ -55,9 +57,8 @@ public class UserService {
 
     public User saveUser(UserProfileViewForm user) {
         User loggedUser = getAuthenticatedUser();
-        loggedUser.setFirstname(user.getFirstname());
-        loggedUser.setLastname(user.getLastname());
-        System.out.println("logged user " + loggedUser);
+        loggedUser.setFirstname(user.getFirstname().substring(0, 1).toUpperCase() + user.getFirstname().substring(1));
+        loggedUser.setLastname(user.getLastname().substring(0, 1).toUpperCase() + user.getLastname().substring(1));
         return userRepository.save(loggedUser);
     }
 }

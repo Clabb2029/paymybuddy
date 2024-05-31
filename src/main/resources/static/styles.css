@@ -90,7 +90,7 @@
     font-size: 2em;
 }
 
-.error {
+.error, .required {
     color: red;
 }
 

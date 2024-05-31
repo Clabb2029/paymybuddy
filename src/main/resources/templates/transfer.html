@@ -22,8 +22,8 @@
                 <option value="">Select A Connection</option>
                 <option th:each="userRelation : ${userRelations}" th:value="${userRelation.getBeneficiary().getId()}" th:text="${userRelation.getBeneficiary().getUserFullname()}"></option>
             </select>
-            <input type="number" th:field="*{amount}" placeholder="0">
-            <input type="text" th:field="*{description}" placeholder="Description">
+            <input type="number" th:value="${draftTransfer == null ? transfer.getAmount() : draftTransfer.getAmount()}" th:field="*{amount}" placeholder="0">
+            <input type="text" th:value="${draftTransfer == null ? transfer.getAmount() : draftTransfer.getAmount()}" th:field="*{description}" placeholder="Description">
             <button type="submit" class="btn btn-success green-bg px-5">Pay</button>
         </form>
         <h4 class="mt-4">My Transactions</h4>
@@ -38,8 +38,8 @@
             <tbody>
             <tr th:each="transfer : ${transfers}" class="transfer-row">
                 <td th:text="${currentUserFullname == transfer.getBeneficiaryFullname()} ? ${transfer.getSenderFullname()} : ${transfer.getSenderFullname()}"></td>
-                <td class="description"><div th:text="${transfer.description}"></div></td>
-                <td th:text="${transfer.amount}"></td>
+                <td class="description"><div th:text="${transfer.getDescription().isEmpty() ? '-' : transfer.getDescription()}"></div></td>
+                <td th:text="${#numbers.formatDecimal(transfer.getAmount(), 1, 'DEFAULT', 2, 'DEFAULT')} + '€'"></td>
             </tr>
             </tbody>
         </table>
@@ -51,18 +51,21 @@
         <form th:action="@{/transfer/add-money}" th:object="${bankTransfer}" action="#" method="post" class="p-5 grey-bg">
             <div class="d-flex justify-content-between mb-3">
                 <div class="col-4">
-                    <label for="amount" class="form-label">Amount</label>
-                    <input th:field="*{amount}" type="number" class="form-control" id="amount" placeholder="0">
+                    <label for="amount" class="form-label">Amount<span class="required">*</span></label>
+                    <input th:value="${draftBankTransfer == null ? bankTransfer.getAmount() : draftBankTransfer.getAmount()}" th:field="*{amount}" type="number" class="form-control" id="amount" placeholder="0">
+                    <small class="error" th:if="${#fields.hasErrors('amount')}" th:errors="*{amount}"></small>
+
                 </div>
                 <div class="col-6">
-                    <label for="bankAccountNumber" class="form-label">Bank account number</label>
-                    <input th:field="*{bankAccountNumber}" type="text" class="form-control" id="bankAccountNumber" placeholder="FR76...">
+                    <label for="bankAccountNumber" class="form-label">Bank account number<span class="required">*</span></label>
+                    <input th:value="${draftBankTransfer == null ? bankTransfer.getBankAccountNumber() : draftBankTransfer.getBankAccountNumber()}" th:field="*{bankAccountNumber}" type="text" class="form-control" id="bankAccountNumber" placeholder="FR76...">
+                    <small class="error" th:if="${#fields.hasErrors('bankAccountNumber')}" th:errors="*{bankAccountNumber}"></small>
                 </div>
             </div>
             <div class="d-flex justify-content-between">
                 <div class="col-4">
                     <label for="description" class="form-label">Description</label>
-                    <input th:field="*{description}" type="text" class="form-control" id="description" placeholder="Cinema">
+                    <input th:value="${draftBankTransfer == null ? bankTransfer.getDescription() : draftBankTransfer.getDescription()}" th:field="*{description}" type="text" class="form-control" id="description" placeholder="Cinema">
                 </div>
                 <button type="submit" class="btn btn-success green-bg px-5 mt-auto">Add Money</button>
             </div>
@@ -79,12 +82,15 @@
             <tbody>
             <tr th:each="transfer : ${bankTransfers}" class="transfer-row">
                 <td th:text="${#temporals.format(transfer.getDate(), 'dd/MM/yyyy HH:mm')}"></td>
-                <td class="description"><div th:text="${transfer.description}"></div></td>
-                <td th:text="${transfer.amount}"></td>
+                <td class="description"><div th:text="${transfer.getDescription().isEmpty() ? '-' : transfer.getDescription()}"></div></td>
+                <td th:text="${#numbers.formatDecimal(transfer.getAmount(), 1, 'DEFAULT', 2, 'DEFAULT')} + '€'"></td>
             </tr>
             </tbody>
         </table>
     </div>
+    <div th:replace="fragments/toast-error :: toast-error (message = ${toastErrorText})"></div>
+    <div th:replace="fragments/toast-success :: toast-success (message = ${toastSuccessText})"></div>
+
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
 </body>
 </html>

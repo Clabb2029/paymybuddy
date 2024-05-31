@@ -15,7 +15,6 @@ import java.util.ArrayList;
 import java.util.Date;
 
 @Service
-@Transactional(readOnly = true)
 public class BankTransferService {
 
     @Autowired

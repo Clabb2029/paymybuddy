@@ -84,18 +84,14 @@ public class UserController {
     }
 
     @PostMapping("/login")
-    public ResponseEntity<String> login(@Valid @ModelAttribute("user") User user, BindingResult bindingResult) {
-        System.out.println("user : " + user);
-        System.out.println("binding res " + bindingResult);
+    public ResponseEntity<String> login(@Valid @ModelAttribute("user") User user) {
         Authentication authentication = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(user.getEmail(), user.getPassword()));
         SecurityContextHolder.getContext().setAuthentication(authentication);
         return new ResponseEntity<>("User successfully logged in!", HttpStatus.OK);
     }
 
     @PostMapping("/register/save")
-    public String registration(@Valid @ModelAttribute("user") User user, RedirectAttributes redirectAttributes, BindingResult bindingResult) {
-        System.out.println("user : " + user);
-        System.out.println("binding res " + bindingResult);
+    public String registration(@Valid @ModelAttribute("user") User user, BindingResult bindingResult, RedirectAttributes redirectAttributes) {
         if(bindingResult.hasErrors()) {
             redirectAttributes.addFlashAttribute("org.springframework.validation.BindingResult.user", bindingResult);
             redirectAttributes.addFlashAttribute("user", user);
@@ -103,19 +99,16 @@ public class UserController {
         }
         try {
             userService.createUser(user);
-            redirectAttributes.addFlashAttribute("created", "Your account has been successfully created");
+            redirectAttributes.addFlashAttribute("toastText", "Your account has been successfully created. Please log in to access your account.");
             return "redirect:/login";
         } catch (IllegalArgumentException | EmailAlreadyExistingException e) {
-            redirectAttributes.addFlashAttribute("error", e.getMessage());
+            redirectAttributes.addFlashAttribute("toastText", "This email is already used. Please try again with another email or log in with this email.");
             return "redirect:/register";
         }
     }
 
     @PostMapping("/edit-user")
     public String editUser(@Valid @ModelAttribute("user") UserProfileViewForm user, BindingResult bindingResult, RedirectAttributes redirectAttributes, Model model) {
-        System.out.println(user);
-        System.out.println(bindingResult.hasErrors());
-        System.out.println(bindingResult.getAllErrors());
         if(bindingResult.hasErrors()) {
             redirectAttributes.addFlashAttribute("org.springframework.validation.BindingResult.user", bindingResult);
             redirectAttributes.addFlashAttribute("user", user);
