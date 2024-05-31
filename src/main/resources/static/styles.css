@@ -101,3 +101,9 @@
     transform: translateX(50%);
     bottom: 2rem;
 }
+
+.balance-icon {
+    color: grey;
+    font-size: 50px;
+    opacity: 0.3;
+}
