@@ -1,6 +1,7 @@
 package com.pay_my_buddy.paymybuddy.service;
 
 import com.pay_my_buddy.paymybuddy.DTO.BankTransferDTO;
+import com.pay_my_buddy.paymybuddy.DTO.UserDTO;
 import com.pay_my_buddy.paymybuddy.model.BankTransfer;
 import com.pay_my_buddy.paymybuddy.model.User;
 import com.pay_my_buddy.paymybuddy.repository.BankTransferRepository;
@@ -42,11 +43,12 @@ public class BankTransferService {
 
     @Transactional
     public void addMoney(BankTransfer bankTransfer) {
-        User currentUser = userService.getAuthenticatedUser();
-        currentUser.setBalance(currentUser.getBalance() + bankTransfer.getAmount());
-        bankTransfer.setUser(currentUser);
+        UserDTO currentUser = userService.getAuthenticatedUser();
+        User user = userRepository.findById(currentUser.getId()).get();
+        currentUser.setBalance(user.getBalance() + bankTransfer.getAmount());
+        bankTransfer.setUser(user);
         bankTransfer.setDate(LocalDateTime.now());
         bankTransferRepository.save(bankTransfer);
-        userRepository.save(currentUser);
+        userRepository.save(user);
     }
 }

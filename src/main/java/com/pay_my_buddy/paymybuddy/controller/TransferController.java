@@ -2,6 +2,7 @@ package com.pay_my_buddy.paymybuddy.controller;
 
 import com.pay_my_buddy.paymybuddy.DTO.BankTransferDTO;
 import com.pay_my_buddy.paymybuddy.DTO.TransferDTO;
+import com.pay_my_buddy.paymybuddy.DTO.UserDTO;
 import com.pay_my_buddy.paymybuddy.model.BankTransfer;
 import com.pay_my_buddy.paymybuddy.model.Relation;
 import com.pay_my_buddy.paymybuddy.model.User;
@@ -45,7 +46,7 @@ public class TransferController {
         model.addAttribute("activePage", "transfer");
         model.addAttribute("titlePage", "Transfer");
         model.addAttribute("selectedTab", "transfer");
-        User currentUser = userService.getAuthenticatedUser();
+        UserDTO currentUser = userService.getAuthenticatedUser();
         ArrayList<TransferDTO> transferDTOList = transferService.getTransfersOfUser(userService.getAuthenticatedUser().getId());
         Iterable<Relation> relationList = relationService.getRelationsOfUser(currentUser.getId());
         model.addAttribute("transfers", transferDTOList);

@@ -1,5 +1,6 @@
 package com.pay_my_buddy.paymybuddy.service;
 
+import com.pay_my_buddy.paymybuddy.DTO.UserDTO;
 import com.pay_my_buddy.paymybuddy.model.User;
 import com.pay_my_buddy.paymybuddy.exception.EmailAlreadyExistingException;
 import com.pay_my_buddy.paymybuddy.model.viewModel.UserProfileViewForm;
@@ -47,16 +48,17 @@ public class UserService {
         userRepository.save(user);
     }
 
-    public User getAuthenticatedUser() {
+    public UserDTO getAuthenticatedUser() {
         String email = SecurityContextHolder.getContext().getAuthentication().getName();
         if(email.isEmpty()) {
             throw new UsernameNotFoundException("Email not found");
         }
-        return userRepository.findByEmail(email).get();
+        User user = userRepository.findByEmail(email).get();
+        return new UserDTO(user.getId(), user.getLastname(), user.getFirstname(), user.getEmail(), user.getBalance());
     }
 
     public User saveUser(UserProfileViewForm user) {
-        User loggedUser = getAuthenticatedUser();
+        User loggedUser = userRepository.findByEmail(user.getEmail()).get();
         loggedUser.setFirstname(user.getFirstname().substring(0, 1).toUpperCase() + user.getFirstname().substring(1));
         loggedUser.setLastname(user.getLastname().substring(0, 1).toUpperCase() + user.getLastname().substring(1));
         return userRepository.save(loggedUser);

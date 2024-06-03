@@ -1,5 +1,6 @@
 package com.pay_my_buddy.paymybuddy.controller;
 
+import com.pay_my_buddy.paymybuddy.DTO.UserDTO;
 import com.pay_my_buddy.paymybuddy.model.User;
 import com.pay_my_buddy.paymybuddy.exception.EmailAlreadyExistingException;
 import com.pay_my_buddy.paymybuddy.model.viewModel.UserProfileViewForm;
@@ -61,7 +62,7 @@ public class UserController {
 
     @GetMapping("/home")
     public String showHomePage(Model model) {
-        User loggedUser = userService.getAuthenticatedUser();
+        UserDTO loggedUser = userService.getAuthenticatedUser();
         Optional<User> lastRelation = relationService.getLastAddedRelationOfUser(loggedUser.getId());
         lastRelation.ifPresent(user -> model.addAttribute("relation", user));
         model.addAttribute("user", loggedUser);
@@ -74,7 +75,7 @@ public class UserController {
 
     @GetMapping("/profile")
     public String showEditUserPage(Model model) {
-        User loggedUser = userService.getAuthenticatedUser();
+        UserDTO loggedUser = userService.getAuthenticatedUser();
         UserProfileViewForm user = new UserProfileViewForm(loggedUser.getLastname(), loggedUser.getFirstname(), loggedUser.getEmail());
         model.addAttribute("user", user);
         model.addAttribute("userSaved", null);

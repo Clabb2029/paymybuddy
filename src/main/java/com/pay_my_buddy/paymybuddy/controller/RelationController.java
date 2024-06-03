@@ -1,5 +1,6 @@
 package com.pay_my_buddy.paymybuddy.controller;
 
+import com.pay_my_buddy.paymybuddy.DTO.UserDTO;
 import com.pay_my_buddy.paymybuddy.model.Relation;
 import com.pay_my_buddy.paymybuddy.model.User;
 import com.pay_my_buddy.paymybuddy.service.RelationService;
@@ -42,12 +43,12 @@ public class RelationController {
 
     @PostMapping("relation/add-buddy")
     public String addBuddy(@RequestParam("foundUserId") Integer foundUserId, RedirectAttributes redirectAttributes) {
-        User user = userService.getUserById(foundUserId).get();
-        User currentUser = userService.getAuthenticatedUser();
-        relationService.addBuddy(user, currentUser);
-        redirectAttributes.addFlashAttribute("newBuddy", user);
+        User beneficiary = userService.getUserById(foundUserId).get();
+        UserDTO currentUser = userService.getAuthenticatedUser();
+        relationService.addBuddy(beneficiary.getId(), currentUser.getId());
+        redirectAttributes.addFlashAttribute("newBuddy", beneficiary);
         redirectAttributes.addFlashAttribute("buddyAdded", true);
-        redirectAttributes.addFlashAttribute("toastText", user.getUserFullname() + " has been successfully added to your buddies list.");
+        redirectAttributes.addFlashAttribute("toastText", beneficiary.getUserFullname() + " has been successfully added to your buddies list.");
         return "redirect:/home";
     }
 }
