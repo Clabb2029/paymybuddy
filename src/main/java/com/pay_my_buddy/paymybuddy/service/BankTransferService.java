@@ -45,7 +45,7 @@ public class BankTransferService {
     public void addMoney(BankTransfer bankTransfer) {
         UserDTO currentUser = userService.getAuthenticatedUser();
         User user = userRepository.findById(currentUser.getId()).get();
-        currentUser.setBalance(user.getBalance() + bankTransfer.getAmount());
+        user.setBalance(user.getBalance() + bankTransfer.getAmount());
         bankTransfer.setUser(user);
         bankTransfer.setDate(LocalDateTime.now());
         bankTransferRepository.save(bankTransfer);
