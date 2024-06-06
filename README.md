@@ -50,10 +50,10 @@ Representing relational data objects and their relationships.
 
 To use the application, it is necessary to create the database.
 To create the database, run the script located here : 
-[src/main/ressources/database/create.sql](src/main/ressources/database/create.sql)
+[src/main/ressources/database/create.sql](src/main/resources/database/create.sql)
 
 It is possible to populate the database by running the script located here :  
-[src/main/ressources/database/data.sql](src/main/ressources/database/data.sql)  
+[src/main/ressources/database/data.sql](src/main/resources/database/data.sql)  
 or by running the application and creating new accounts.
 
 
