@@ -39,10 +39,11 @@
             <tr th:each="transfer : ${transfers}" class="transfer-row">
                 <td th:text="${currentUserId == transfer.getBeneficiaryId()} ? ${transfer.getSenderFullname()} : ${transfer.getBeneficiaryFullname()}"></td>
                 <td class="description"><div th:text="${transfer.getDescription().isEmpty() ? '-' : transfer.getDescription()}"></div></td>
-                <td th:text="${#numbers.formatDecimal(transfer.getAmount(), 1, 'DEFAULT', 2, 'DEFAULT')} + '€'"></td>
+                <td th:text="${currentUserId == transfer.getBeneficiaryId()} ? ${#numbers.formatDecimal(transfer.getAmount()-(transfer.getAmount()*transfer.getCommission()), 1, 'DEFAULT', 2, 'DEFAULT')} + '€' : ${#numbers.formatDecimal(transfer.getAmount(), 1, 'DEFAULT', 2, 'DEFAULT')} + '€'"></td>
             </tr>
             </tbody>
         </table>
+        <nav th:replace="fragments/pagination.html"></nav>
     </div>
     <div class="container py-4 px-5" th:if="${selectedTab == 'banktransfer'}">
         <div class="d-flex justify-content-start">
@@ -54,7 +55,6 @@
                     <label for="amount" class="form-label">Amount<span class="required">*</span></label>
                     <input th:value="${draftBankTransfer == null ? bankTransfer.getAmount() : draftBankTransfer.getAmount()}" th:field="*{amount}" type="number" class="form-control" id="amount" placeholder="0">
                     <small class="error" th:if="${#fields.hasErrors('amount')}" th:errors="*{amount}"></small>
-
                 </div>
                 <div class="col-6">
                     <label for="bankAccountNumber" class="form-label">Bank account number<span class="required">*</span></label>
@@ -80,13 +80,14 @@
             </tr>
             </thead>
             <tbody>
-            <tr th:each="transfer : ${bankTransfers}" class="transfer-row">
+            <tr th:each="transfer : ${transfers}" class="transfer-row">
                 <td th:text="${#temporals.format(transfer.getDate(), 'dd/MM/yyyy HH:mm')}"></td>
                 <td class="description"><div th:text="${transfer.getDescription().isEmpty() ? '-' : transfer.getDescription()}"></div></td>
                 <td th:text="${#numbers.formatDecimal(transfer.getAmount(), 1, 'DEFAULT', 2, 'DEFAULT')} + '€'"></td>
             </tr>
             </tbody>
         </table>
+        <nav th:replace="fragments/pagination.html"></nav>
     </div>
     <div th:replace="fragments/toast-error :: toast-error (message = ${toastErrorText})"></div>
     <div th:replace="fragments/toast-success :: toast-success (message = ${toastSuccessText})"></div>

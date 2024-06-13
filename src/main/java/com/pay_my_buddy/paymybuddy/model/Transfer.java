@@ -14,7 +14,7 @@ import lombok.ToString;
 @NoArgsConstructor
 public class Transfer extends Transaction{
 
-    private Float commission;
+    private Double commission;
 
     @OneToOne
     @JoinColumn(name = "relation_id", referencedColumnName = "id")

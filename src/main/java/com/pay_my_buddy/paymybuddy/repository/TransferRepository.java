@@ -1,6 +1,8 @@
 package com.pay_my_buddy.paymybuddy.repository;
 
 import com.pay_my_buddy.paymybuddy.model.Transfer;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
@@ -18,5 +20,5 @@ public interface TransferRepository extends CrudRepository<Transfer, Integer> {
             "WHERE r.sender.id = ?1 " +
             "OR r.beneficiary.id = ?1 " +
             "ORDER BY t.date DESC")
-    Iterable<Transfer> findTransfersOfUser(Integer id);
+    Page<Transfer> findTransfersOfUser(Integer id, Pageable pageable);
 }

@@ -10,7 +10,7 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 public class TransferDTO {
 
-    private Float commission;
+    private Double commission;
     private LocalDateTime date;
     private String description;
     private Integer beneficiaryId;
@@ -26,7 +26,7 @@ public class TransferDTO {
     @Getter
     private String senderFullname;
 
-    public TransferDTO(Float commission, LocalDateTime date, String description, Integer beneficiaryId, String beneficiary_lastname, String beneficiary_firstname, Integer senderId, String sender_lastname, String sender_firstname, Float amount) {
+    public TransferDTO(Double commission, LocalDateTime date, String description, Integer beneficiaryId, String beneficiary_lastname, String beneficiary_firstname, Integer senderId, String sender_lastname, String sender_firstname, Float amount) {
         this.commission = commission;
         this.date = date;
         this.description = description;
