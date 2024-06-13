@@ -43,6 +43,11 @@ public class SpringSecurityConfig {
                                 .usernameParameter("email")
                                 .passwordParameter("password")
                                 .defaultSuccessUrl("/home",true)
+                ).rememberMe(
+                        rememberMe -> rememberMe
+                                .userDetailsService(userDetailsService())
+                                .tokenValiditySeconds(600)
+                                .key("AbcdefghiJklmNoPqRstUvXyz")
                 ).logout(
                         logout -> logout
                                 .logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
