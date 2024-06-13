@@ -13,8 +13,10 @@ public class TransferDTO {
     private Float commission;
     private LocalDateTime date;
     private String description;
+    private Integer beneficiaryId;
     private String beneficiary_lastname;
     private String beneficiary_firstname;
+    private Integer senderId;
     private String sender_lastname;
     private String sender_firstname;
     private Float amount;
@@ -24,12 +26,14 @@ public class TransferDTO {
     @Getter
     private String senderFullname;
 
-    public TransferDTO(Float commission, LocalDateTime date, String description, String beneficiary_lastname, String beneficiary_firstname, String sender_lastname, String sender_firstname, Float amount) {
+    public TransferDTO(Float commission, LocalDateTime date, String description, Integer beneficiaryId, String beneficiary_lastname, String beneficiary_firstname, Integer senderId, String sender_lastname, String sender_firstname, Float amount) {
         this.commission = commission;
         this.date = date;
         this.description = description;
+        this.beneficiaryId = beneficiaryId;
         this.beneficiary_lastname = beneficiary_lastname;
         this.beneficiary_firstname = beneficiary_firstname;
+        this.senderId = senderId;
         this.sender_lastname = sender_lastname;
         this.sender_firstname = sender_firstname;
         this.amount = amount;

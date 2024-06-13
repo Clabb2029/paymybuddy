@@ -46,11 +46,11 @@ public class TransferController {
         model.addAttribute("activePage", "transfer");
         model.addAttribute("titlePage", "Transfer");
         model.addAttribute("selectedTab", "transfer");
-        UserDTO currentUser = userService.getAuthenticatedUser();
-        ArrayList<TransferDTO> transferDTOList = transferService.getTransfersOfUser(userService.getAuthenticatedUser().getId());
-        Iterable<Relation> relationList = relationService.getRelationsOfUser(currentUser.getId());
+        Integer currentUserId = userService.getAuthenticatedUser().getId();
+        ArrayList<TransferDTO> transferDTOList = transferService.getTransfersOfUser(currentUserId);
+        Iterable<Relation> relationList = relationService.getRelationsOfUser(currentUserId);
         model.addAttribute("transfers", transferDTOList);
-        model.addAttribute("currentUserFullname", userService.getAuthenticatedUser().getUserFullname());
+        model.addAttribute("currentUserId", currentUserId);
         model.addAttribute("transfer", new TransferViewForm());
         model.addAttribute("draftTransfer", null);
         model.addAttribute("userRelations", relationList);

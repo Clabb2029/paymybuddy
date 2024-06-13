@@ -37,7 +37,7 @@
             </thead>
             <tbody>
             <tr th:each="transfer : ${transfers}" class="transfer-row">
-                <td th:text="${currentUserFullname == transfer.getBeneficiaryFullname()} ? ${transfer.getSenderFullname()} : ${transfer.getSenderFullname()}"></td>
+                <td th:text="${currentUserId == transfer.getBeneficiaryId()} ? ${transfer.getSenderFullname()} : ${transfer.getBeneficiaryFullname()}"></td>
                 <td class="description"><div th:text="${transfer.getDescription().isEmpty() ? '-' : transfer.getDescription()}"></div></td>
                 <td th:text="${#numbers.formatDecimal(transfer.getAmount(), 1, 'DEFAULT', 2, 'DEFAULT')} + '€'"></td>
             </tr>

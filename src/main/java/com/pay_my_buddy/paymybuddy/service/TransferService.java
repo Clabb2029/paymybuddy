@@ -41,8 +41,10 @@ public class TransferService {
                     transfer.getCommission(),
                     transfer.getDate(),
                     transfer.getDescription(),
+                    transfer.getRelation().getBeneficiary().getId(),
                     transfer.getRelation().getBeneficiary().getLastname(),
                     transfer.getRelation().getBeneficiary().getFirstname(),
+                    transfer.getRelation().getSender().getId(),
                     transfer.getRelation().getSender().getLastname(),
                     transfer.getRelation().getSender().getFirstname(),
                     transfer.getAmount()
