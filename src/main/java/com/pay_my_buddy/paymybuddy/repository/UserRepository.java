@@ -12,9 +12,6 @@ public interface UserRepository extends CrudRepository<User, Integer>{
 
     Optional<User> findByEmail(String email);
 
-    @Query("FROM User WHERE email = ?1 AND password = ?2")
-    User findByEmailAndPassword(String email, String password);
-
     @Query("FROM User WHERE email = ?2 AND email != ?1")
     Optional<User> findUserByEmailOtherThanCurrentUser(String currentUserEmail, String emailSearched);
 

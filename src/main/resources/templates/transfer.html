@@ -29,18 +29,18 @@
         <h4 class="mt-4">My Transactions</h4>
         <table class="table table-striped table-borderless transfer-table">
             <thead>
-            <tr class="transfer-row">
-                <th scope="col">Connection</th>
-                <th scope="col">Description</th>
-                <th scope="col">Amount</th>
-            </tr>
+                <tr class="transfer-row">
+                    <th scope="col">Connection</th>
+                    <th scope="col">Description</th>
+                    <th scope="col">Amount</th>
+                </tr>
             </thead>
             <tbody>
-            <tr th:each="transfer : ${transfers}" class="transfer-row">
-                <td th:text="${currentUserId == transfer.getBeneficiaryId()} ? ${transfer.getSenderFullname()} : ${transfer.getBeneficiaryFullname()}"></td>
-                <td class="description"><div th:text="${transfer.getDescription().isEmpty() ? '-' : transfer.getDescription()}"></div></td>
-                <td th:text="${currentUserId == transfer.getBeneficiaryId()} ? ${#numbers.formatDecimal(transfer.getAmount()-(transfer.getAmount()*transfer.getCommission()), 1, 'DEFAULT', 2, 'DEFAULT')} + '€' : ${#numbers.formatDecimal(transfer.getAmount(), 1, 'DEFAULT', 2, 'DEFAULT')} + '€'"></td>
-            </tr>
+                <tr th:each="transfer : ${transfers}" class="transfer-row">
+                    <td th:text="${currentUserId == transfer.getBeneficiaryId()} ? ${transfer.getSenderFullname()} : ${transfer.getBeneficiaryFullname()}"></td>
+                    <td class="description"><div th:text="${transfer.getDescription().isEmpty() ? '-' : transfer.getDescription()}"></div></td>
+                    <td th:text="${currentUserId == transfer.getBeneficiaryId()} ? ${#numbers.formatDecimal(transfer.getAmount()-(transfer.getAmount()*transfer.getCommission()), 1, 'DEFAULT', 2, 'DEFAULT')} + '€' : ${#numbers.formatDecimal(transfer.getAmount(), 1, 'DEFAULT', 2, 'DEFAULT')} + '€'"></td>
+                </tr>
             </tbody>
         </table>
         <nav th:replace="fragments/pagination.html"></nav>
@@ -73,25 +73,24 @@
         <h4>My Transfers</h4>
         <table class="table table-striped table-borderless transfer-table">
             <thead>
-            <tr class="transfer-row">
-                <th scope="col">Date</th>
-                <th scope="col">Description</th>
-                <th scope="col">Amount</th>
-            </tr>
+                <tr class="transfer-row">
+                    <th scope="col">Date</th>
+                    <th scope="col">Description</th>
+                    <th scope="col">Amount</th>
+                </tr>
             </thead>
             <tbody>
-            <tr th:each="transfer : ${transfers}" class="transfer-row">
-                <td th:text="${#temporals.format(transfer.getDate(), 'dd/MM/yyyy HH:mm')}"></td>
-                <td class="description"><div th:text="${transfer.getDescription().isEmpty() ? '-' : transfer.getDescription()}"></div></td>
-                <td th:text="${#numbers.formatDecimal(transfer.getAmount(), 1, 'DEFAULT', 2, 'DEFAULT')} + '€'"></td>
-            </tr>
+                <tr th:each="transfer : ${transfers}" class="transfer-row">
+                    <td th:text="${#temporals.format(transfer.getDate(), 'dd/MM/yyyy HH:mm')}"></td>
+                    <td class="description"><div th:text="${transfer.getDescription().isEmpty() ? '-' : transfer.getDescription()}"></div></td>
+                    <td th:text="${#numbers.formatDecimal(transfer.getAmount(), 1, 'DEFAULT', 2, 'DEFAULT')} + '€'"></td>
+                </tr>
             </tbody>
         </table>
         <nav th:replace="fragments/pagination.html"></nav>
     </div>
     <div th:replace="fragments/toast-error :: toast-error (message = ${toastErrorText})"></div>
     <div th:replace="fragments/toast-success :: toast-success (message = ${toastSuccessText})"></div>
-
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
 </body>
 </html>

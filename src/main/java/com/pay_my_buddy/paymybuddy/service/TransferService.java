@@ -8,18 +8,13 @@ import com.pay_my_buddy.paymybuddy.model.User;
 import com.pay_my_buddy.paymybuddy.model.viewModel.TransferViewForm;
 import com.pay_my_buddy.paymybuddy.repository.TransferRepository;
 import com.pay_my_buddy.paymybuddy.repository.UserRepository;
-import jakarta.persistence.Converter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.Objects;
 import java.util.function.Function;
 
 @Service
